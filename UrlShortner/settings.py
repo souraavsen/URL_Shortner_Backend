@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-HOST_URL='http://127.0.0.1:8000/'
+HOST_URL='https://url-shortner-ssg.herokuapp.com/'
 
 # Application definition
 
