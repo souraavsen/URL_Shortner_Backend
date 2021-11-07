@@ -24,9 +24,6 @@ class ShortedUrls(APIView):
 class Quickshort(APIView):
     def post(self, request):
 
-        print(request.user)
-        print(self.request.user)
-
         short=(settings.HOST_URL+ randomurl())
         s_url= Short_URL(short_url=short)
         data= {"currentuser":request, "main_url":request.data, "short_url":short}
@@ -50,7 +47,6 @@ class CustomizeShortUrl(APIView):
     def post(self, request):
 
         if request.method=="POST":
-            print(request.user)
             mainUrl=request.data["main_url"]
 
             givenshort=request.data["short_url"]
@@ -139,7 +135,5 @@ class Redirect(APIView):
     def get(self,request,shortUrl):
         short_link=settings.HOST_URL+ shortUrl
         url=(Short_URL.objects.get(short_url=short_link))
-        print(url)
         redirectTo=url.main_url
-        print(redirectTo)
         return redirect(redirectTo)
