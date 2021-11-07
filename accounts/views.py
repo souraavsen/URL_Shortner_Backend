@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -32,3 +32,20 @@ For Test:
 "email": "asadrfan@example.com"
 }
 """
+
+
+class LoginView(ObtainAuthToken):
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token = Token.objects.get_or_create(user=user)
+        print(token)
+        return Response({
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'username': user.username,
+            'email': user.email,
+            'token': token[0].key
+        })
